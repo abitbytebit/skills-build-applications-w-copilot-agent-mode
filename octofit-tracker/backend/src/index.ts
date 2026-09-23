@@ -1,9 +1,9 @@
 import express from 'express';
 import apiRouter from './routes/api.js';
 import { connectDatabase } from './config/database.js';
+import { apiBaseUrl, port } from './config/api.js';
 
 const app = express();
-const port = Number(process.env.PORT || 8000);
 
 app.use(express.json());
 app.use('/api', apiRouter);
@@ -16,7 +16,7 @@ if (process.env.NODE_ENV !== 'test') {
   connectDatabase()
     .then(() => {
       app.listen(port, () => {
-        console.log(`OctoFit Tracker API listening on port ${port}`);
+        console.log(`OctoFit Tracker API listening at ${apiBaseUrl}`);
       });
     })
     .catch((error: unknown) => {
